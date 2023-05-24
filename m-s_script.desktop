@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Mining Service
+Exec=/opt/conceal-toolbox/mining_service/mining_s.sh
+Icon=ms.png
+Hidden=false
+NoDisplay=false
+Terminal=true
+Comment=dis-enable mining service 
+X-GNOME-Autostart-enabled=true
