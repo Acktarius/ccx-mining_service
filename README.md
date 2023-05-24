@@ -1,7 +1,7 @@
 # ccx-mining_service
 **LINUX ONLY**
 
-enable/disable ccx-mining service for CCX-BOX,
+install/enable/disable ccx-mining service for CCX-BOX, to be use in conjonction with Conceal Assistant
 
 if not use with a CCX-BOX, here are the prerequisite :
 
