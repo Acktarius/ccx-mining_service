@@ -23,41 +23,68 @@ if [[ ! -f /etc/systemd/system/ccx-mining.service ]]; then
 #presentation
 echo -e "${GRIS}###############################################################      .::::."
 echo -e "#                                                                .:---=--=--::."
-echo -e "#${WHITE} This script will place ccx-mining.service ${GRIS}                     -=:+-.  .-=:=:"
-echo -e "#${WHITE} in /etc/systemd/system ${GRIS}                                        -=:+."
-echo -e "#${WHITE} and enable the Service ${GRIS}                                        -=:+."
+echo -e "#${WHITE} This script will generate ccx-mining.service ${TURNOFF}${GRIS}          \t -=:+-.  .-=:=:"
+echo -e "#${WHITE} in /etc/systemd/system ${TURNOFF}${GRIS}                                        -=:+."
+echo -e "#${WHITE} and enable the Service ${TURNOFF}${GRIS}                                        -=:+."
 echo -e "#                                                           \t -=:+."
 echo -e "#                                                           \t -=:=."
 echo -e "#                                                           \t -+:-:    .::."
 echo -e "#                                                           \t -+==------===-"
 echo -e "###############################################################\t    :-=-==-:\n"
 #question
-read -p "Do you want to install mining service ? (Y/n)" answer
-case "$answer" in
-	Y|Yes|yes|y)
+sleep 1
+if zenity --question --title "Confirm to proceed" --width 400 --height 80 --text "Do you want to generate mining service ?"
+then
+sleep 1
+WDIR=$(zenity --file-selection --title="Select the miner working Directory" --width 400 --height 250 --directory)
+case $? in
+        0)
+
+	MINER=$(zenity --file-selection --title="Select the miner executable File" --width 400 --height 250)
+
+	case $? in
+     		0)
+
 #check is oc is in place
 	if [[ ! -f /opt/conceal-toolbox/oc-amd/oc-amd.sh ]]; then 
-	sudo cp /opt/conceal-toolbox/mining_service/ccx-mining_temp_no_oc.service /etc/systemd/system/ccx-mining.service
+		sudo cp /opt/conceal-toolbox/mining_service/ccx-mining_temp_no_oc.service /opt/conceal-toolbox/mining_service/ccx-mining_temp.service
 	else
-	sudo cp /opt/conceal-toolbox/mining_service/ccx-mining_temp_oc.service /etc/systemd/system/ccx-mining.service
+		sudo cp /opt/conceal-toolbox/mining_service/ccx-mining_temp_oc.service /opt/conceal-toolbox/mining_service/ccx-mining_temp.service
 	fi
+sudo sed -i "s~WWW~$WDIR~g" /opt/conceal-toolbox/mining_service/ccx-mining_temp.service
+sudo sed -i "s~XXX~$MINER~g" /opt/conceal-toolbox/mining_service/ccx-mining_temp.service
+sudo mv /opt/conceal-toolbox/mining_service/ccx-mining_temp.service /etc/systemd/system/ccx-mining.service
 sudo systemctl enable ccx-mining.service
 sudo systemctl daemon-reload
-echo -e "${WHITE}Service is in place and enabled${TURNOFF}!"
+        	;;
+		1)
+                echo "No file selected."
+		sleep 1
+		exit
+		;;
+        	-1)
+                echo "An unexpected error has occurred."
+		sleep 1
+		exit
+		;;
+		esac
+	;;
+	1)
+	echo "No directory selected."
+	sleep 1
 	exit
 	;;
-	*)
-echo -e "${WHITE}Nothing has been done${TURNOFF}!"
-sleep 2
+	-1)
+	echo "Unexpected Error !"
+	sleep 1
 	exit
 	;;
 esac
 fi
-
+fi
 #in case service actif
 actif=$(systemctl status ccx-mining | head -n 5 | grep -c "Active: a")
 if [[ "$actif" > 0 ]]; then
-
 #presentation
 echo -e "${GRIS}###############################################################      .::::."
 echo -e "#                                                                .:---=--=--::."
