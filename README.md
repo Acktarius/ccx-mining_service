@@ -1,12 +1,7 @@
 # ccx-mining_service
 **LINUX ONLY**
 
-install/enable/disable ccx-mining service for CCX-BOX, to be use in conjonction with Conceal Assistant
-
-if not use with a CCX-BOX, here are the prerequisite :
-
-* miner : xmr-stak
-* located : /opt/xmr-stak/build/bin
+generate,install/enable/disable ccx-mining service for CCX-BOX, to be use in conjonction with Conceal Assistant
 
 ## installation
 * place ms.png in `~/icons`
