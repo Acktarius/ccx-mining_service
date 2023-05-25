@@ -5,7 +5,7 @@ generate,install/enable/disable ccx-mining service for CCX-BOX, to be use in con
 
 ## installation
 ### "manually"
-* place ms.png in `~/icons`
+* place ms.png in `~/.icons`
 * place m-s_script.desktop in `~/.local/share/applications`
 * place the remaining files in `/opt/conceal-toolbox/mining_service` folder
 * `sudo chmod 755 mining_s.sh`
